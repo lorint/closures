@@ -1,0 +1,77 @@
+<html>
+<head>
+	<title>Map markers in need of a closure</title>
+
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+  <script>
+  function initialize() {
+    var places = [
+      {lat: 34.118333, lng: -118.300440,
+        title: '<h5><a target="_blank" href="http://www.griffithobs.org/">Griffith Observatory</a></h5>'},
+      {lat: 34.077038866435501, lng: -118.473902395005,
+        title: '<h5><a target="_blank" href="http://www.getty.edu/">Getty Center</a></h5>'},
+      {lat: 34.0149152, lng: -118.2845019,
+        title: '<h5><a target="_blank" href="http://www.californiasciencecenter.org/">California Science Center</a></h5>'},
+      {lat: 34.101943, lng: -118.321201,
+        title: '<h5><a target="_blank" href="http://www.museumofdeath.net/">Museum of Death</a></h5>'},
+      {lat: 34.0518135, lng: -118.26672929,
+        title: '<h5><a target="_blank" href="http://lethalamounts.com/">Lethal Amounts</a></h5>'},
+      {lat: 34.0885366, lng: -118.2081051,
+        title: '<h5><a target="_blank" href="http://heritagesquare.org/">Heritage Square Museum</a></h5>'},
+      {lat: 34.063043908240999, lng: -118.356507063072,
+        title: '<h5><a target="_blank" href="http://www.tarpits.org/">La Brea Tar Pits</a></h5>'},
+      {lat: 34.024316, lng: -118.512688,
+        title: '<h5><a target="_blank" href="http://beachhouse.smgov.net/">Annenberg Community Beach House</a></h5>'},
+      {lat: 34.0343602, lng: -118.284725,
+        title: '<h5><a target="_blank" href="http://www.panoramaonview.org/">Velaslavasay Panorama</a></h5>'},
+      // Note this dummy value ...
+      {title: 'D\'oh'}];
+
+  //map initialize
+    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions = {
+      zoom: 11,
+      center: new google.maps.LatLng(34.06, -118.35),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      scrollwheel: false
+    });
+
+  //infowindows initialize
+    // Make just one infowindow
+    var infowindow = new google.maps.InfoWindow();
+
+    // Make markers for each place
+    for (var i=0; i < places.length - 1; i++) {  
+      // Build a marker on the map with the proper lat and lng
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(places[i].lat, places[i].lng),
+        map: map,
+        animation: google.maps.Animation.DROP
+      });
+
+      google.maps.event.addListener(marker, 'click',
+        function() {
+        // Put the right text in the infowindow
+        infowindow.setContent(places[i].title);
+        // Open the infowindow on top of this marker
+        infowindow.open(map, marker);
+      });
+
+    }
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  </script>
+  <style>
+    #map-canvas {
+      margin-bottom:30px;
+      height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map-canvas"></div>
+</body>
+</html>
